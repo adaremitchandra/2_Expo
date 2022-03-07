@@ -24,11 +24,14 @@ const TabNavigation = ({ navigation }) => {
     <Tab.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primaryColor },
+        headerTitleStyle: {
+          fontFamily: "open-sans-bold",
+        },
         headerTintColor: "white",
         headerLeft: () => (
           <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
-              title="Favorite"
+              title="Menu"
               iconName="ios-menu"
               onPress={() => navigation.toggleDrawer()}
             />
@@ -49,7 +52,7 @@ const DrawerNavigation = () => {
       <Drawer.Screen
         name="TabNavigation"
         component={TabNavigation}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, drawerLabel: "Meal" }}
       />
       <Drawer.Screen
         name="Filter"
@@ -58,6 +61,19 @@ const DrawerNavigation = () => {
           title: "Filter Meals",
           headerStyle: { backgroundColor: Colors.primaryColor },
           headerTintColor: "white",
+          drawerLabel: "Filter!!!",
+          headerTitleStyle: {
+            fontFamily: "open-sans-bold",
+          },
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+              <Item
+                title="Save"
+                iconName="ios-save"
+                onPress={() => console.log("sda")}
+              />
+            </HeaderButtons>
+          ),
         }}
       />
     </Drawer.Navigator>
@@ -72,6 +88,9 @@ const MealsNavigation = () => {
           screenOptions={{
             headerStyle: { backgroundColor: Colors.primaryColor },
             headerTintColor: "white",
+            headerTitleStyle: {
+              fontFamily: "open-sans-bold",
+            },
           }}
         >
           <Stack.Screen
