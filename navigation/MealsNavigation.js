@@ -5,11 +5,31 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CategoriesScreen from "../screens/CategoriesScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
+import FavoriteScreen from "../screens/FavoriteScreen";
+
 import Colors from "../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import ButtomNavigator from "../components/BottomNavigator";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const MainNavigation = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primaryColor },
+        headerTintColor: "white",
+      }}
+      tabBar={(props) => <ButtomNavigator {...props} />}
+    >
+      <Tab.Screen name="Categories" component={CategoriesScreen} />
+      <Tab.Screen name="Favorite" component={FavoriteScreen} />
+    </Tab.Navigator>
+  );
+};
 
 const MealsNavigation = () => {
   return (
@@ -21,7 +41,11 @@ const MealsNavigation = () => {
             headerTintColor: "white",
           }}
         >
-          <Stack.Screen name="Categoties" component={CategoriesScreen} />
+          <Stack.Screen
+            name="Main"
+            component={MainNavigation}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="CategoryMeals"
             component={CategoryMealsScreen}
