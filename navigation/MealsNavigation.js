@@ -6,7 +6,7 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
-import FiltersScreen from "../screens/FavoriteScreen";
+import FiltersScreen from "../screens/FiltersScreen";
 
 import Colors from "../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -19,7 +19,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-const TabNavigation = () => {
+const TabNavigation = ({ navigation }) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -30,7 +30,7 @@ const TabNavigation = () => {
             <Item
               title="Favorite"
               iconName="ios-menu"
-              onPress={() => console.log("FAV")}
+              onPress={() => navigation.toggleDrawer()}
             />
           </HeaderButtons>
         ),
@@ -46,8 +46,20 @@ const TabNavigation = () => {
 const DrawerNavigation = () => {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="TabNavigation" component={TabNavigation} />
-      <Drawer.Screen name="Filter" component={FiltersScreen} />
+      <Drawer.Screen
+        name="TabNavigation"
+        component={TabNavigation}
+        options={{ headerShown: false }}
+      />
+      <Drawer.Screen
+        name="Filter"
+        component={FiltersScreen}
+        options={{
+          title: "Filter Meals",
+          headerStyle: { backgroundColor: Colors.primaryColor },
+          headerTintColor: "white",
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -64,7 +76,7 @@ const MealsNavigation = () => {
         >
           <Stack.Screen
             name="Main"
-            component={TabNavigation}
+            component={DrawerNavigation}
             options={{ headerShown: false }}
           />
           <Stack.Screen
