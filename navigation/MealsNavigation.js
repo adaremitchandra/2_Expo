@@ -6,28 +6,49 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
+import FiltersScreen from "../screens/FavoriteScreen";
 
 import Colors from "../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ButtomNavigator from "../components/BottomNavigator";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
-const MainNavigation = () => {
+const TabNavigation = () => {
   return (
     <Tab.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primaryColor },
         headerTintColor: "white",
+        headerLeft: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Favorite"
+              iconName="ios-menu"
+              onPress={() => console.log("FAV")}
+            />
+          </HeaderButtons>
+        ),
       }}
       tabBar={(props) => <ButtomNavigator {...props} />}
     >
       <Tab.Screen name="Categories" component={CategoriesScreen} />
       <Tab.Screen name="Favorite" component={FavoriteScreen} />
     </Tab.Navigator>
+  );
+};
+
+const DrawerNavigation = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="TabNavigation" component={TabNavigation} />
+      <Drawer.Screen name="Filter" component={FiltersScreen} />
+    </Drawer.Navigator>
   );
 };
 
@@ -43,7 +64,7 @@ const MealsNavigation = () => {
         >
           <Stack.Screen
             name="Main"
-            component={MainNavigation}
+            component={TabNavigation}
             options={{ headerShown: false }}
           />
           <Stack.Screen
