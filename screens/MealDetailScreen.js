@@ -1,5 +1,9 @@
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
-import React from "react";
+import React, { useCallback, useEffect, useLayoutEffect } from "react";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import HeaderButton from "../components/HeaderButton";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite } from "../store/actions/meal";
 
 const ListItem = ({ children }) => {
   return (
@@ -9,8 +13,31 @@ const ListItem = ({ children }) => {
   );
 };
 
-const MealDetailScreen = ({ route }) => {
+const MealDetailScreen = ({ route, navigation }) => {
+  const dispacth = useDispatch();
   const selectedMeal = route.params;
+
+  const isFavorite = useSelector((state) =>
+    state.meals.favoriteMeals.some((meal) => meal.id === selectedMeal.id)
+  );
+
+  const toggleFavoriteHandler = useCallback(() => {
+    dispacth(toggleFavorite(selectedMeal.id));
+  }, [dispacth, selectedMeal.id]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Favorite"
+            iconName={isFavorite ? "ios-star" : "ios-star-outline"}
+            onPress={toggleFavoriteHandler}
+          />
+        </HeaderButtons>
+      ),
+    });
+  }, [navigation, toggleFavoriteHandler, isFavorite]);
 
   return (
     <ScrollView>

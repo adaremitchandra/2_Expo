@@ -1,19 +1,17 @@
-import * as React from "react";
-import { Text } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as React from "react";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import ButtomNavigator from "../components/BottomNavigator";
+import HeaderButton from "../components/HeaderButton";
+import Colors from "../constants/Colors";
 import CategoriesScreen from "../screens/CategoriesScreen";
-import MealDetailScreen from "../screens/MealDetailScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
 import FiltersScreen from "../screens/FiltersScreen";
-
-import Colors from "../constants/Colors";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import HeaderButton from "../components/HeaderButton";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ButtomNavigator from "../components/BottomNavigator";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import MealDetailScreen from "../screens/MealDetailScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -99,15 +97,6 @@ const MealsNavigation = () => {
             component={MealDetailScreen}
             options={({ route }) => ({
               title: route.params.title,
-              headerRight: () => (
-                <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                  <Item
-                    title="Favorite"
-                    iconName="ios-star"
-                    onPress={() => console.log("FAV")}
-                  />
-                </HeaderButtons>
-              ),
             })}
           />
         </Stack.Group>
