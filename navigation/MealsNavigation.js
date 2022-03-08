@@ -46,7 +46,7 @@ const TabNavigation = ({ navigation }) => {
   );
 };
 
-const DrawerNavigation = () => {
+const DrawerNavigation = ({ data }) => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen
@@ -65,15 +65,6 @@ const DrawerNavigation = () => {
           headerTitleStyle: {
             fontFamily: "open-sans-bold",
           },
-          headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-              <Item
-                title="Save"
-                iconName="ios-save"
-                onPress={() => console.log("sda")}
-              />
-            </HeaderButtons>
-          ),
         }}
       />
     </Drawer.Navigator>
